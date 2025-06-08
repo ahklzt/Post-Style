@@ -1,0 +1,168 @@
+<?xml version="1.0" encoding="utf-8"?>
+<template_modifications>
+  <modification type="public" template="extra.less" modification_key="dd_post_extra_key" execution_order="10" enabled="1" action="preg_replace">
+    <find><![CDATA[/^.*$/s]]></find>
+    <replace><![CDATA[{{ include("dd_post_extra.less") }}
+$0]]></replace>
+  </modification>
+  <modification type="public" template="post_macros" modification_key="dd_post_macros_key" execution_order="10" enabled="1" action="str_replace">
+    <find><![CDATA[<header class="message-attribution message-attribution--split">
+		<ul class="message-attribution-main listInline {$mainClass}">
+			<xf:if is="$showThreadStateIcons">
+				<xf:if is="{$xf.visitor.user_id} AND {$thread.Watch.{$xf.visitor.user_id}}">
+					<li>
+						<xf:fa icon="fa-bell" title="{{ phrase('thread_watched')|for_attr }}" />
+						<span class="u-srOnly">{{ phrase('thread_watched') }}</span>
+					</li>
+				</xf:if>
+
+				<xf:if is="$thread.sticky">
+					<li>
+						<xf:fa icon="fa-thumbtack" title="{{ phrase('sticky')|for_attr }}" />
+						<span class="u-srOnly">{{ phrase('sticky') }}</span>
+					</li>
+				</xf:if>
+			</xf:if>
+			<xf:if is="$showUser">
+				<xf:set var="$username"><xf:username user="{$post.User}" defaultname="{$post.username}" /></xf:set>
+				<li class="u-concealed message-attribution-user--top">{{ phrase('by_user_x', {'name':$username}) }}</li>
+			</xf:if>
+			<li class="u-concealed">
+				<a href="{{ link('threads/post', $thread, {'post_id': $post.post_id}) }}" rel="nofollow" {{ $includeMicrodata ? 'itemprop="url"' : '' }}>
+					<xf:date time="{$post.post_date}" itemprop="{{ $includeMicrodata ? 'datePublished' : '' }}" />
+				</a>
+			</li>
+			<xf:if is="$showReplyCount && $thread.reply_count">
+				<li class="u-concealed">
+					<a href="{{ link('threads', $thread) }}#posts">
+						<xf:fa icon="fa-comment" class="u-spaceAfter" />{$repliesPhrase|raw} {$thread.reply_count|number}
+					</a>
+				</li>
+			</xf:if>
+		</ul>
+
+		<ul class="message-attribution-opposite message-attribution-opposite--list {$oppositeClass}">
+			<xf:if is="$post.isUnread()">
+				<li><span class="message-newIndicator">{{ phrase('new') }}</span></li>
+			<xf:elseif is="$thread.isUnread() && $showThreadUnreadIndicator" />
+				<li><span class="message-newIndicator" title="{{ phrase('new_replies')|for_attr }}">{{ phrase('new') }}</span></li>
+			</xf:if>
+			<li>
+				<a href="{{ link('threads/post', $thread, {'post_id': $post.post_id}) }}"
+					class="message-attribution-gadget"
+					data-xf-init="share-tooltip"
+					data-href="{{ link('posts/share', $post) }}"
+					aria-label="{{ phrase('share')|for_attr }}"
+					rel="nofollow">
+					<xf:fa icon="fa-share-alt"/>
+				</a>
+			</li>
+			<xf:if contentcheck="true">
+				<li>
+					<xf:contentcheck>
+						<xf:macro template="bookmark_macros" name="link"
+							arg-content="{$post}"
+							arg-class="message-attribution-gadget bookmarkLink--highlightable"
+							arg-confirmUrl="{{ link('posts/bookmark', $post) }}"
+							arg-showText="{{ false }}"/>
+					</xf:contentcheck>
+				</li>
+			</xf:if>
+			<xf:if is="$showPosition">
+				<li>
+					<a href="{{ link('threads/post', $thread, {'post_id': $post.post_id}) }}" rel="nofollow">
+						#{{ number($post.position + 1) }}
+					</a>
+				</li>
+			</xf:if>
+		</ul>
+	</header>]]></find>
+    <replace><![CDATA[<header class="message-attribution message-attribution--split">
+		<ul class="message-attribution-main listInline {$mainClass}">
+			<xf:if is="$showThreadStateIcons">
+				<xf:if is="{$xf.visitor.user_id} AND {$thread.Watch.{$xf.visitor.user_id}}">
+					<li>
+						<xf:fa icon="fa-bell" title="{{ phrase('thread_watched')|for_attr }}" />
+						<span class="u-srOnly">{{ phrase('thread_watched') }}</span>
+					</li>
+				</xf:if>
+				
+				<xf:if is="$thread.sticky">
+					<li>
+						<xf:fa icon="fa-thumbtack" title="{{ phrase('sticky')|for_attr }}" />
+						<span class="u-srOnly">{{ phrase('sticky') }}</span>
+					</li>
+				</xf:if>
+			</xf:if>
+			<div class="dd-threadPost-User"
+				data-author="{{ $post.User.username ?: $post.username }}"
+				data-content="post-{$post.post_id}">
+				
+					<div class="message-avatar">
+						<div class="message-avatar-wrapper">
+							<xf:avatar user="{$post.User}" size="s" defaultname="{$fallbackName}" itemprop="image" />
+						</div>
+					</div>
+				
+					<div class="dd-tpuser-username">
+						<ul class="listInline listInline--bullet message-attribution-main">
+							<li><xf:username user="{$post.User}" rich="true" defaultname="{$post.username}" class="u-concealed" itemprop="name" /></li>
+						</ul>
+					</div>
+				
+
+			</div>
+			<xf:if is="$showReplyCount && $thread.reply_count">
+				<li class="u-concealed">
+					<a class="message-userNam">
+						<xf:fa icon="fa-comment" class="u-spaceAfter" />{$repliesPhrase|raw} {$thread.reply_count|number}
+					</a>
+				</li>
+			</xf:if>
+		</ul>
+	</header>]]></replace>
+  </modification>
+  <modification type="public" template="tag_macros" modification_key="dd_post_tag_macros_key" execution_order="5" enabled="1" action="str_replace">
+    <find><![CDATA[<xf:if is="$editLink">
+				<a href="{$editLink}" class="u-concealed--icon"
+					data-xf-click="overlay" data-cache="off"
+					data-xf-init="tooltip" title="{{ phrase('edit_tags')|for_attr }}">{$tagIcon}</a>
+			<xf:else />
+				{$tagIcon}
+			</xf:if>]]></find>
+    <replace><![CDATA[<xf:if is="$editLink">
+				<a href="{$editLink}" class="tageditstyle"
+					data-xf-click="overlay" data-cache="off"
+					data-xf-init="tooltip" title="{{ phrase('edit_tags')|for_attr }}">{{ phrase('dd_post_editing_tags') }}</a>
+			<xf:else />
+				{$tagIcon}
+			</xf:if>]]></replace>
+  </modification>
+  <modification type="public" template="thread_view" modification_key="dd_post_thread_view_key" execution_order="5" enabled="1" action="str_replace">
+    <find><![CDATA[<xf:description meta="false">
+	<ul class="listInline listInline--bullet">
+		<li>
+			<xf:fa icon="fa-user" title="{{ phrase('thread_starter')|for_attr }}" />
+			<span class="u-srOnly">{{ phrase('thread_starter') }}</span>
+
+			<xf:username user="{$thread.User}" defaultname="{$thread.username}" class="u-concealed" />
+		</li>
+		<li>
+			<xf:fa icon="fa-clock" title="{{ phrase('start_date')|for_attr }}" />
+			<span class="u-srOnly">{{ phrase('start_date') }}</span>
+
+			<a href="{{ link('threads', $thread) }}" class="u-concealed"><xf:date time="{$thread.post_date}" /></a>
+		</li>
+		<xf:if is="$xf.options.enableTagging AND ($thread.canEditTags() OR $thread.tags)">
+			<li>
+				<xf:macro template="tag_macros" name="list"
+					arg-tags="{$thread.tags}"
+					arg-tagList="tagList--thread-{$thread.thread_id}"
+					arg-editLink="{{ $thread.canEditTags() ? link('threads/tags', $thread) : '' }}" />
+			</li>
+		</xf:if>
+	</ul>
+</xf:description>]]></find>
+    <replace><![CDATA[<xf:include template="dd_post_thread_view" />]]></replace>
+  </modification>
+</template_modifications>

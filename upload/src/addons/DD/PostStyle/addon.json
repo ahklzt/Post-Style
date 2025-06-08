@@ -1,0 +1,14 @@
+{
+    "legacy_addon_id": "",
+    "title": "[DD] Post Style",
+    "description": "",
+    "version_id": 1000070,
+    "version_string": "1.0.0",
+    "dev": "ahk_lzt",
+    "dev_url": "https://t.me/ahk_live",
+    "faq_url": "https://ddcats.xyz",
+    "support_url": "",
+    "extra_urls": [],
+    "require": [],
+    "icon": "icon.png"
+}

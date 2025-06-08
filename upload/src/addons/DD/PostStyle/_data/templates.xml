@@ -1,0 +1,158 @@
+<?xml version="1.0" encoding="utf-8"?>
+<templates>
+  <template type="public" title="dd_post_extra.less" version_id="1000070" version_string="1.0.0"><![CDATA[.p-body-header {
+	background: @xf-paletteNeutral1;
+    margin: 0 0px 10px;
+    padding: 15px 20px;
+    border-radius: 4px;
+    height: auto;
+}
+
+.dd-tagblock {
+	margin: 15px 0 0;
+}
+
+.tagList, .tagList li {
+    display: inline;
+}
+
+.tagList .tagItem {
+	color: @xf-paletteNeutral3;
+    font-weight: 600;
+    position: relative;
+    display: inline-block;
+    background: @xf-paletteColor1;
+    margin-right: 4px;
+    height: 26px;
+    line-height: 26px;
+    padding: 0 9px;
+    border-radius: 6px;
+    margin-bottom: 8px;
+    transition: 0.4s;
+	border: 0px solid #ffffff00;
+	align-items: center;
+}
+
+.tageditstyle {
+	color: @xf-paletteNeutral3;
+    font-weight: 600;
+    position: relative;
+    display: inline-block;
+    background: @xf-paletteColor1;
+    margin-right: 4px;
+    height: 26px;
+    line-height: 26px;
+    padding: 0 9px;
+    border-radius: 6px;
+    margin-bottom: 2px;
+    transition: 0.4s;
+	border: 0px solid #ffffff00;
+	align-items: center;
+}
+
+.dd-threadPost-User {
+    border-radius: 12px;
+    display: inline-flex;
+    align-items: center;
+    gap: 6px;
+}
+
+.dd-tpuser-username {
+    display: grid;
+    gap: 6px;
+}
+
+.message-attribution-main {
+    float: left;
+}
+.listInline {
+    list-style: none;
+    margin: 0;
+    padding: 0;
+}
+
+.message-attribution.message-attribution--split {
+    display: flex;
+    align-items: flex-end;
+    flex-wrap: wrap;
+}
+
+.message-attribution {
+    color: #9f9f9f;
+    font-size: 12px;
+    padding-bottom: 3px;
+}
+
+.message-actionBar {
+    background: @xf-paletteNeutral1;
+    padding: 3px 10px;
+    height: auto;
+    margin: 0px 0px 5px;
+}
+
+.message-actionBar .actionBar-set {
+    margin-top: 10px;
+    font-size: 11px;
+}
+
+.actionBar-action.actionBar-action--reply {
+    float: right;
+    display: flex;
+    align-items: center;
+}
+
+[data-template="thread_view"] {
+	.p-breadcrumbs {
+		list-style: none;
+		background: @xf-paletteNeutral1;
+		padding: 9px 10px;
+		border-radius: 4px;
+		height: auto;
+		margin: 0px 0px 10px;
+		line-height: 1.5;
+	}
+	
+	.block-outer.block-outer--after {
+		display: none;
+	}
+	
+	.block-outer {
+		background: @xf-paletteNeutral1;
+		padding: 9px 10px;
+		border-radius: 4px;
+		height: auto;
+		margin: 0px 0px 10px;
+	}
+}]]></template>
+  <template type="public" title="dd_post_macros" version_id="1000070" version_string="1.0.0"><![CDATA[]]></template>
+  <template type="public" title="dd_post_thread_view" version_id="1000070" version_string="1.0.0"><![CDATA[<xf:description meta="false">
+	<ul class="listInline listInline--bullet">
+		<li>
+			{{ phrase('dd_post_topic_in_section') }} 
+			<a href="{{ link('forums', $thread.Forum) }}">{$thread.Forum.title}</a>
+		</li>
+		<li>
+			<span class="u-srOnly">
+				{{ phrase('start_date') }}
+			</span>
+			
+			{{ phrase('dd_post_created') }} 
+			<a class="u-concealed"><xf:date time="{$thread.post_date}" /></a>
+		</li>
+		<li>
+			{{ $thread.discussion_type == 'redirect' ? '&ndash;' : ($thread.view_count > $thread.reply_count ? $thread.view_count|number_short : number_short($thread.reply_count+1)) }}
+			{{ phrase('dd_post_view') }} 
+		</li>
+	</ul>
+	<div class="dd-tagblock dd-tagcontainer">
+		<xf:if is="$xf.options.enableTagging AND ($thread.canEditTags() OR $thread.tags)">
+			<li>
+				<xf:macro template="tag_macros" name="list"
+					arg-tags="{$thread.tags}"
+					arg-tagList="tagList--thread-{$thread.thread_id}"
+					arg-editLink="{{ $thread.canEditTags() ? link('threads/tags', $thread) : '' }}" />
+			</li>
+		</xf:if>
+	</div>
+</xf:description>]]></template>
+</templates>

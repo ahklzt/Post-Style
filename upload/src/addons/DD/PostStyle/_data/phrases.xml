@@ -1,0 +1,7 @@
+<?xml version="1.0" encoding="utf-8"?>
+<phrases>
+  <phrase title="dd_post_created" version_id="1000070" version_string="1.0.0" global_cache="1"><![CDATA[the topic was created]]></phrase>
+  <phrase title="dd_post_editing_tags" version_id="1000070" version_string="1.0.0" global_cache="1"><![CDATA[Editing Tags]]></phrase>
+  <phrase title="dd_post_topic_in_section" version_id="1000070" version_string="1.0.0" global_cache="1"><![CDATA[Topic in section]]></phrase>
+  <phrase title="dd_post_view" version_id="1000070" version_string="1.0.0" global_cache="1"><![CDATA[View]]></phrase>
+</phrases>
